@@ -21,7 +21,7 @@ def global_viz(popl, fit, it):
 
     # valores iniciais do ese
     omg = 0.9
-    c1, c2 = 2.0
+    c1, c2 = 2.0, 2.0
 
     for i in range(it):
 
