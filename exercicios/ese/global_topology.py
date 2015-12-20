@@ -19,11 +19,11 @@ def global_viz(popl, fit, it):
     
     gbest = deepcopy(popl[0])
 
+    # valores iniciais do ese
+    omg = 0.9
+    c1, c2 = 2.0
 
     for i in range(it):
-
-        f = ese(popl)
-        omg = omega(f)
 
         # atualiza velocidades
         calc_velocity(popl, gbest, limit_min, limit_max, omg)
@@ -39,3 +39,8 @@ def global_viz(popl, fit, it):
 
         if popl[0].best_fit < gbest.best_fit:
             gbest = deepcopy(popl[0])
+        
+        # implementacao do ese
+        f = ese(popl)
+        omg = omega(f)
+        c1, c2 = aceleracao(f, c1, c2)

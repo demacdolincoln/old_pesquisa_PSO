@@ -18,7 +18,7 @@ class Particle(object):
         self.best_posit = self.position[::]
         self.best_fit = self.fitness
 
-def calc_velocity(popl, gbest, limit_min, limit_max, omega):
+def calc_velocity(popl, gbest, limit_min, limit_max, omega, c1, c2):
     """TODO: Docstring for calc_velocity.
 
     calculo de velocidade usando o fator de constricao
@@ -28,6 +28,7 @@ def calc_velocity(popl, gbest, limit_min, limit_max, omega):
     :limit_min: limite minimo
     :limit_max: limite maximo
     :omega: fator de constricao
+    :c1 e c2: fatores de aceleracao
 
     """
     for part in popl:
@@ -37,13 +38,13 @@ def calc_velocity(popl, gbest, limit_min, limit_max, omega):
             best_posit = part.best_posit[index]
             gbest_posit = gbest.best_posit[index]
 
-            rnd_0 = np.random.rand() * 2.05
-            rnd_1 = np.random.rand() * 2.05
+            rnd_0 = np.random.rand() * c1
+            rnd_1 = np.random.rand() * c2
 
             cognitivo = best_posit - act_posit
             social = gbest_posit - act_posit
             
-            new_veloc = omega * (veloc + rnd_0 * cognitivo + rnd_1 * social)
+            new_veloc = omega * (veloc + rnd_0  * social + rnd_1 * cognitivo)
 
             # controle de valocidade
             if new_veloc > limit_max:

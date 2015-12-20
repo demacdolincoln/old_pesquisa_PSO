@@ -20,6 +20,7 @@ def ese(popl):
             if i != j:
                 for d_i, d_j in zip(i.position, j.position):
                     dist.append(np.sqrt((d_i - d_j)**2))
+
         sum_i = 1/(n-1) * np.sum(dist)
         d_is.append(sum_i)
         if d_best == None:
@@ -44,3 +45,29 @@ def omega(f):
     omg = 1/(1 + 1.5 * (np.e**(-2.6*f)))
 
     return omg
+
+def aceleracao(f, c1, c2):
+    """TODO: Docstring for aceleracao.
+
+    :f: resultado da funcao "ese"
+    :c1, c2: fatores de aceleracao
+    :returns: c1 e c2 atualizados
+
+    obs.: c1 -> social
+          c2 -> cognitivo
+
+    """
+    if f <= 0.25:
+        c1 += np.random.rand()
+        c2 -= np.random.rand()
+    elif f > 0.25 and f <= 0.5:
+        c1 += np.random.rand()/2
+        c2 -= np.random.rand()/2
+    elif f > 0.5 and f <= 0.75:
+        c1 += np.random.rand()/2
+        c2 += np.random.rand()/2
+    elif f > 0.75:
+        c1 -= np.random.rand()
+        c2 += np.random.rand()
+
+    return c1, c2
