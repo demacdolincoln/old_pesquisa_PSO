@@ -15,6 +15,8 @@ def global_viz(popl, fit, it):
     limit_min = fit.limit_min
     limit_max = fit.limit_max
 
+    fit.fitness(popl)
+
     popl.sort(key=lambda x: x.best_fit)
     
     gbest = deepcopy(popl[0])
@@ -26,7 +28,7 @@ def global_viz(popl, fit, it):
     for i in range(it):
 
         # atualiza velocidades
-        calc_velocity(popl, gbest, limit_min, limit_max, omg)
+        calc_velocity(popl, gbest, limit_min, limit_max, omg, c1, c2)
 
         # atualiza posicoes
         calc_posit(popl, limit_min, limit_max)
@@ -44,3 +46,9 @@ def global_viz(popl, fit, it):
         f = ese(popl)
         omg = omega(f)
         c1, c2 = aceleracao(f, c1, c2)
+
+        if i % 20 == 0:
+            print(30 * '-')
+            print(gbest.fitness)
+            print(c1, c2, omg)
+            print(popl[-1].fitness)

@@ -27,6 +27,6 @@ class Griewank(object):
             
             part.fitness = soma - prod + 1
 
-            if part.fitness < part.best_fit:
+            if part.best_fit == None or part.fitness < part.best_fit :
                 part.best_fit = part.fitness
                 part.best_posit = np.copy(part.position)

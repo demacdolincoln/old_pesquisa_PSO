@@ -10,7 +10,7 @@ populacao = 30
 fit = fitness()
 
 # formacao da populacao inicial
-popl = [Particle(fit.dim, fit.limit_min, fit.limit_max) for _ in populacao]
+popl = [Particle(fit.dim, fit.limit_min, fit.limit_max) for _ in range(populacao)]
 
 # implementacao de fato 
 global_viz(popl, fit, iteracoes)
