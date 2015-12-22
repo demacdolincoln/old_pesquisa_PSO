@@ -1,4 +1,5 @@
-import numpy as np
+#import numpy as np
+from math import cos, sqrt
 
 class Griewank(object):
 
@@ -10,23 +11,22 @@ class Griewank(object):
         self.limit_max = 600
         self.dim = 30
 
-    def fitness(self, popl):
+    def fitness(self, position):
+
         """TODO: Docstring for fitness.
 
         :popl: TODO
         :returns: TODO
 
         """
-        for part in popl:
-            soma = 0
-            prod = 1
 
-            for i, posit in enumerate(part.position, 1):
-                soma += (posit ** 2) / 4000
-                prod *= np.cos(posit/np.sqrt(i))
-            
-            part.fitness = soma - prod + 1
+        soma = 0
+        prod = 1
 
-            if part.best_fit == None or part.fitness < part.best_fit :
-                part.best_fit = part.fitness
-                part.best_posit = np.copy(part.position)
+        for i, posit in enumerate(position, 1):
+            soma += (posit ** 2) / 4000
+            prod *= cos(posit/sqrt(i))
+        
+        return soma - prod + 1
+
+        
