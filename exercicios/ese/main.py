@@ -2,6 +2,7 @@ from pso import Particle
 from global_topology import global_viz
 from fitness.griewank import Griewank as fitness
 #from fitness.sphere import Sphere as fitness
+import csv
 
 # confs iniciais
 iteracoes = 10000
@@ -22,3 +23,12 @@ for i in popl:
 
 # implementacao de fato 
 data = global_viz(popl, fit, iteracoes)
+
+# exportando dados coletados para csv
+file_csv = open('out_{0}.csv'.format(fit.__module__.split('.')[1]), 'w')
+writer = csv.writer(file_csv)
+writer.writerow(data.keys())
+for z in zip(*data.values()):
+    writer.writerow(z)
+
+file_csv.close()
