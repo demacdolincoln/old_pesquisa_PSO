@@ -1,34 +1,45 @@
 from pso import Particle
-from global_topology import global_viz
-from fitness.griewank import Griewank as fitness
-#from fitness.sphere import Sphere as fitness
+from global_topology import global_viz as topology
+#from topology_2 import global_top as topology
+
+from fitness.griewank import Griewank as g
+from fitness.rastring import Rastring as r
+from fitness.salomon import Salomon as s
+from fitness.ackley import Ackley as a
+from fitness.schwefel import Schwefel as sh
+from fitness.sphere import Sphere as sp
+
 import csv
 
-# confs iniciais
-iteracoes = 10000
-populacao = 30
+list_fits = [g, r, s, a, sh, sp]
 
-# criando o objeto fitness
-fit = fitness()
+for fitness in list_fits:
 
-# formacao da populacao inicial
-popl = [Particle(fit) for _ in range(populacao)]
+	# confs iniciais
+	iteracoes = 10000
+	populacao = 30
 
+	# criando o objeto fitness
+	fit = fitness()
 
-for i in popl:
-    i.fitness = fit.fitness(i.position)
-    i.best_fit = i.fitness
-    i.best_posit = i.position[::]
+	# formacao da populacao inicial
+	popl = [Particle(fit) for _ in range(populacao)]
 
 
-# implementacao de fato 
-data = global_viz(popl, fit, iteracoes)
+	for i in popl:
+	    i.fitness = fit.fitness(i.position)
+	    i.best_fit = i.fitness
+	    i.best_posit = i.position[::]
 
-# exportando dados coletados para csv
-file_csv = open('out_{0}.csv'.format(fit.__module__.split('.')[1]), 'w')
-writer = csv.writer(file_csv)
-writer.writerow(data.keys())
-for z in zip(*data.values()):
-    writer.writerow(z)
 
-file_csv.close()
+	# implementacao de fato 
+	data = topology(popl, fit, iteracoes)
+
+	# exportando dados coletados para csv
+	file_csv = open('out_{0}_normal.csv'.format(fit.__module__.split('.')[1]), 'w')
+	writer = csv.writer(file_csv)
+	writer.writerow(data.keys())
+	for z in zip(*data.values()):
+	    writer.writerow(z)
+
+	file_csv.close()

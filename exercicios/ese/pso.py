@@ -20,6 +20,7 @@ class Particle(object):
         self.fitness = None
         self.best_posit = self.position[::]
         self.best_fit = None
+        self._func_fit = fit.fitness
 
     def __repr__(self):
         return 'fitness: {0} \n best_fit: {1}'.format(self.fitness,self.best_fit)
@@ -37,30 +38,51 @@ class Particle(object):
         :c1 e c2: fatores de aceleracao
 
         """
-    
-        nv = []
-        for index in range(len(self.velocity)):
 
-            veloc = self.position[index]
-            act_posit = self.position[index]
-            best_posit = self.best_posit[index]
-            gbest_posit = gbest.best_posit[index]
+        velocity = []
 
-            rnd_0 = uniform(0, 1)
-            rnd_1 = uniform(0, 1)
+        for posit in range(len(self.position)):
+            inc = self.position[posit]
+            veloc = self.velocity[posit]
+            cog = self.best_posit[posit]
+            soc = gbest.best_posit[posit]
 
-            #new_veloc = omega* veloc + c1*rnd_0*(best_posit - act_posit) + rnd_1*c2*(gbest_posit - act_posit)
-            new_veloc = 0.7*(veloc + rnd_0*2.05*(best_posit - act_posit) + rnd_1*2.05*(gbest_posit - act_posit))
-            
-            # controle de valocidade
+            new_veloc = 0.4*veloc + uniform(0,1)*2.05*(cog - inc) + uniform(0,1)*2.05*(soc - inc)
+            #new_veloc = omega*veloc + uniform(0,1)*c2*(cog - inc) + uniform(0,1)*c1*(soc - inc)
+
+            #Controlando a velocidade
             if new_veloc > limit_max:
                 new_veloc = limit_min
             elif new_veloc < limit_min:
                 new_veloc = limit_max
 
-            nv.append(new_veloc)
+            velocity.append(new_veloc)
 
-        self.velocity = nv[::]
+        self.velocity = velocity[::]
+    
+        # nv = []
+        # for index in range(len(self.velocity)):
+
+        #     veloc = self.position[index]
+        #     act_posit = self.position[index]
+        #     best_posit = self.best_posit[index]
+        #     gbest_posit = gbest.best_posit[index]
+
+        #     rnd_0 = uniform(0, 1)
+        #     rnd_1 = uniform(0, 1)
+
+        #     #new_veloc = omega* veloc + c1*rnd_0*(best_posit - act_posit) + rnd_1*c2*(gbest_posit - act_posit)
+        #     new_veloc = 0.4*veloc + rnd_0*2.05*(best_posit - act_posit) + rnd_1*2.05*(gbest_posit - act_posit)
+            
+        #     # controle de valocidade
+        #     if new_veloc > limit_max:
+        #         new_veloc = limit_min
+        #     elif new_veloc < limit_min:
+        #         new_veloc = limit_max
+
+        #     nv.append(new_veloc)
+
+        # self.velocity = nv[::]
 
     def calc_posit(self, limit_min, limit_max):
         """TODO: Docstring for calc_posit
@@ -83,3 +105,10 @@ class Particle(object):
             np.append(new_posit)
         
         self.position = np[::]
+
+    def calc_fit(self):
+        self.fitness = self._func_fit(self.position)
+
+        if self.fitness < self.best_fit:
+            self.best_fit = self.fitness
+            self.best_posit = self.position[::]

@@ -72,8 +72,19 @@ def aceleracao(f, c1, c2):
         c1 -= rand(0, 1)
         c2 += rand(0, 1)
 
+    # if abs(c1) < 1.5:
+    #     c1 = 1.5
+    # elif abs(c1) > 2.5:
+    #     c1 = 2.5
+
+    # if abs(c2) < 1.5:
+    #     c2 = 1.5
+    # elif abs(c2) > 2.5:
+    #     c2 = 2.5
+
     if (c1 + c2) > 4 or (c1 + c2) < 0:
         c1 = 1.5
         c2 = 2.5
+
 
     return c1, c2
