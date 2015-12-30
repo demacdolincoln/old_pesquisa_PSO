@@ -2,6 +2,7 @@
 from pso import *
 from ese import *
 from copy import deepcopy
+from metricas import *
 
 def global_viz(popl, fit, it):
     """TODO: Docstring for global.
@@ -22,7 +23,8 @@ def global_viz(popl, fit, it):
     omg = 0.8
     c1, c2 = 2.0, 2.0
     
-    varss = {#'c1':[], 'c2':[], 'omg':[], 'f':[],
+    #'c1':[], 'c2':[], 'omg':[], 
+    varss = {'f':[], 'spacing':[], 'maximum_spread':[],
             'best_fit':[], 'mean_fit':[], 'sum_veloc':[],
             'best_part':[]}
 
@@ -49,15 +51,19 @@ def global_viz(popl, fit, it):
             gbest = deepcopy(_cand_gbest)
 
         # implementacao do ese
-        #f = ese(popl)
+        f = ese(popl)
         #omg = omega(f)
         #c1, c2 = aceleracao(f, c1, c2)
+
+        # metricas
+        varss['maximum_spread'].append(maximum_spread(popl))
+        varss['spacing'].append(spacing(popl))
 
         # coleta de dados:
         #varss['c1'].append(c1)
         #varss['c2'].append(c2)
         #varss['omg'].append(omg)
-        #varss['f'].append(f)
+        varss['f'].append(f)
         varss['best_fit'].append(gbest.best_fit)
         varss['mean_fit'].append(sum(i.best_fit for i in popl_sort))
         varss['sum_veloc'].append(sum(popl_sort[0].velocity))

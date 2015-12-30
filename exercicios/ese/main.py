@@ -11,35 +11,36 @@ from fitness.sphere import Sphere as sp
 
 import csv
 
-list_fits = [g, r, s, a, sh, sp]
+list_fits = [sp, r, s, a, sh, g]
 
 for fitness in list_fits:
 
-	# confs iniciais
-	iteracoes = 10000
-	populacao = 30
+    # confs iniciais
+    iteracoes = 10000
+    populacao = 30
 
-	# criando o objeto fitness
-	fit = fitness()
+    # criando o objeto fitness
+    fit = fitness()
 
-	# formacao da populacao inicial
-	popl = [Particle(fit) for _ in range(populacao)]
-
-
-	for i in popl:
-	    i.fitness = fit.fitness(i.position)
-	    i.best_fit = i.fitness
-	    i.best_posit = i.position[::]
+    # formacao da populacao inicial
+    popl = [Particle(fit) for _ in range(populacao)]
 
 
-	# implementacao de fato 
-	data = topology(popl, fit, iteracoes)
+    for i in popl:
+        i.fitness = fit.fitness(i.position)
+        i.best_fit = i.fitness
+        i.best_posit = i.position[::]
 
-	# exportando dados coletados para csv
-	file_csv = open('out_{0}_normal.csv'.format(fit.__module__.split('.')[1]), 'w')
-	writer = csv.writer(file_csv)
-	writer.writerow(data.keys())
-	for z in zip(*data.values()):
-	    writer.writerow(z)
 
-	file_csv.close()
+    # implementacao de fato 
+    data = topology(popl, fit, iteracoes)
+
+    # exportando dados coletados para csv
+    file_csv = open('out_metrica_{0}.csv'.format(fit.__module__.split('.')[1]), 'w')
+    writer = csv.writer(file_csv)
+    writer.writerow(data.keys())
+    zz = zip(*data.values())
+    for z in zz:
+        writer.writerow(z)
+
+    file_csv.close()
