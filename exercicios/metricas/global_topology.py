@@ -1,8 +1,8 @@
 # from scipy.optimize import rosen
 from pso import *
-from ese import *
+from metricas.ese import *
 from copy import deepcopy
-from metricas import *
+from metricas.metricas import *
 
 def global_viz(popl, fit, it):
     """TODO: Docstring for global.

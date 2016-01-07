@@ -1,4 +1,6 @@
-* ese - Evolutionary State Estimation; baseado no paper [adaptative pso](../papers/adaptative_pso.pdf)
+* metricas - análise de metricas que possam indicar a estagnação de partículas
+             metricas utilizadas:
+                - Evolutionary State Estimation; baseado no paper [adaptative pso](../papers/adaptative_pso.pdf)
 
 ---
 os resultados dos exercícios estão no formato .csv, que pode ser aberto tanto em algum editor ou visualizador de planilha eletrônica quanto no Pandas, onde devolve um objeto DataFrame.
