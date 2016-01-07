@@ -3,6 +3,7 @@ from pso import *
 from metricas.ese import *
 from copy import deepcopy
 from metricas.metricas import *
+from metricas.rpso import sigma
 
 def global_viz(popl, fit, it):
     """TODO: Docstring for global.
@@ -24,7 +25,7 @@ def global_viz(popl, fit, it):
     c1, c2 = 2.0, 2.0
     
     #'c1':[], 'c2':[], 'omg':[], 
-    varss = {'f':[], 'spacing':[], 'maximum_spread':[],
+    varss = {'f':[], 'spacing':[], 'conv_rpso':[],
             'best_fit':[], 'mean_fit':[], 'sum_veloc':[],
             'best_part':[]}
 
@@ -56,7 +57,7 @@ def global_viz(popl, fit, it):
         #c1, c2 = aceleracao(f, c1, c2)
 
         # metricas
-        varss['maximum_spread'].append(maximum_spread(popl))
+        varss['conv_rpso'].append(sigma(popl, gbest))
         varss['spacing'].append(spacing(popl))
 
         # coleta de dados:

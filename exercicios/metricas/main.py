@@ -36,7 +36,7 @@ for fitness in list_fits:
     data = topology(popl, fit, iteracoes)
 
     # exportando dados coletados para csv
-    file_csv = open('out_metrica_{0}.csv'.format(fit.__module__.split('.')[1]), 'w')
+    file_csv = open('outs_metricas/out_metrica_{0}.csv'.format(fit.__module__.split('.')[1]), 'w')
     writer = csv.writer(file_csv)
     writer.writerow(data.keys())
     zz = zip(*data.values())

@@ -17,6 +17,7 @@ class Particle(object):
         self.position = [0] * fit.dim
         for i in range(fit.dim):
             self.position[i] = uniform(fit.limit_min, fit.limit_max)
+        self.old_position = [0] * fit.dim
         self.fitness = None
         self.best_posit = self.position[::]
         self.best_fit = None
@@ -92,7 +93,9 @@ class Particle(object):
         :limit_max: limite maximo
 
         """
+		
 
+        self.old_position = self.position[::]
         np = []
         for index in range(len(self.position)):
             new_posit = self.position[index] + self.velocity[index]
