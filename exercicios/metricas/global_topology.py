@@ -4,6 +4,7 @@ from metricas.ese import *
 from copy import deepcopy
 from metricas.metricas import *
 from metricas.rpso import sigma
+from metricas.psodd import R
 
 def global_viz(popl, fit, it):
     """TODO: Docstring for global.
@@ -25,12 +26,18 @@ def global_viz(popl, fit, it):
     c1, c2 = 2.0, 2.0
     
     #'c1':[], 'c2':[], 'omg':[], 
-    varss = {'f':[], 'spacing':[], 'conv_rpso':[],
+    varss = {'f':[], 'spacing':[], 'conv_rpso':[],'pso-dd':[],
             'best_fit':[], 'mean_fit':[], 'sum_veloc':[],
             'best_part':[]}
-
+    
+    fbest = gbest.fitness
+    prev_fbest = fbest
+    mveloc = sum([sum(x.velocity)/fit.dim for x in popl])/len(popl)
+    prev_mveloc = mveloc
 
     for i in range(it):
+        
+        
 
         # atualiza velocidades
         #calc_velocity(popl_sort, gbest, limit_min, limit_max, omg, c1, c2)
@@ -50,15 +57,14 @@ def global_viz(popl, fit, it):
         _cand_gbest = popl_sort[0]
         if _cand_gbest.best_fit < gbest.best_fit:
             gbest = deepcopy(_cand_gbest)
+        
+        fbest = gbest.fitness
+        mveloc = sum([sum(x.velocity)/fit.dim for x in popl])/len(popl)
 
         # implementacao do ese
         f = ese(popl)
         #omg = omega(f)
         #c1, c2 = aceleracao(f, c1, c2)
-
-        # metricas
-        varss['conv_rpso'].append(sigma(popl, gbest))
-        varss['spacing'].append(spacing(popl))
 
         # coleta de dados:
         #varss['c1'].append(c1)
@@ -70,6 +76,13 @@ def global_viz(popl, fit, it):
         varss['sum_veloc'].append(sum(popl_sort[0].velocity))
         varss['best_part'].append(popl_sort[0].fitness)
 
+        # metricas
+        varss['conv_rpso'].append(sigma(popl, gbest))
+        varss['spacing'].append(spacing(popl))
+        varss['pso-dd'].append(R(fbest, prev_fbest, mveloc, prev_mveloc))
+        
+        prev_fbest = fbest
+        prev_mveloc = mveloc
         # if i % 100 == 0:
         #     print(30 * '-')
 

@@ -2,6 +2,7 @@
              metricas utilizadas:
                 - Evolutionary State Estimation; baseado no paper [adaptative pso](../papers/adaptative_pso.pdf)
                 - RegPSO: baseado no paper [Regrouping Particle Swarm Optimization](../papers/Regrouping\ Particle\ Swarm\ Optimization)
+                - pso-dd: baseado no paper [A Particle Swarm OPtimization with Stagnation Detection and Dispersion](../papers/A\ pso\ with\ stagnation\ detection\ and\ dispersion.pdf)
 
 ---
 os resultados dos exercícios estão no formato .csv, que pode ser aberto tanto em algum editor ou visualizador de planilha eletrônica quanto no Pandas, onde devolve um objeto DataFrame.
