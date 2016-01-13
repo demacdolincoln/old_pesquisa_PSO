@@ -26,7 +26,7 @@ def global_viz(popl, fit, it):
     c1, c2 = 2.0, 2.0
     
     #'c1':[], 'c2':[], 'omg':[], 
-    varss = {'f':[], 'spacing':[], 'conv_rpso':[],'pso-dd':[],
+    varss = {'f':[], 'spacing':[], 'conv_rpso':[],'pso_dd':[],
             'best_fit':[], 'mean_fit':[], 'sum_veloc':[],
             'best_part':[]}
     
@@ -79,7 +79,7 @@ def global_viz(popl, fit, it):
         # metricas
         varss['conv_rpso'].append(sigma(popl, gbest))
         varss['spacing'].append(spacing(popl))
-        varss['pso-dd'].append(R(fbest, prev_fbest, mveloc, prev_mveloc))
+        varss['pso_dd'].append(R(fbest, prev_fbest, mveloc, prev_mveloc))
         
         prev_fbest = fbest
         prev_mveloc = mveloc
